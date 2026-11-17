@@ -48,6 +48,10 @@
   var nodeEls = {}, spokeEls = {};
   function buildSeam() {
     var s = $("seamSvg"), cx = 220, cy = 200, R = 150, nodes = C.seams.nodes;
+    // Narrow screens: widen the viewBox so the outer labels stay inside the screen.
+    var mq = matchMedia("(max-width: 600px)");
+    var fit = function () { s.setAttribute("viewBox", mq.matches ? "-70 0 580 400" : "0 0 440 400"); };
+    fit(); mq.addEventListener ? mq.addEventListener("change", fit) : mq.addListener(fit);
     s.appendChild(svg("circle", { class: "ring", cx: cx, cy: cy, r: R }));
     s.appendChild(svg("circle", { class: "ring", cx: cx, cy: cy, r: 86 }));
     nodes.forEach(function (n, i) {
@@ -273,6 +277,20 @@
     document.documentElement.dataset.theme = t;
     try { localStorage.setItem("mj-theme", t); } catch (e) {}
   });
+  /* ---------- Mobile menu ---------- */
+  (function () {
+    var btn = $("menuBtn"), top = document.querySelector(".top"), nav = $("siteNav");
+    if (!btn || !nav) return;
+    function set(open) {
+      top.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+    btn.addEventListener("click", function () { set(!top.classList.contains("open")); });
+    nav.addEventListener("click", function (e) { if (e.target.closest("a")) set(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && top.classList.contains("open")) { set(false); btn.focus(); } });
+    document.addEventListener("click", function (e) { if (top.classList.contains("open") && !top.contains(e.target)) set(false); });
+  })();
   $("reviewOn").addEventListener("click", function () { setReview(!document.body.classList.contains("review")); });
   $("reviewOff").addEventListener("click", function () { setReview(false); });
   document.addEventListener("keydown", function (e) {
