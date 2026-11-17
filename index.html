@@ -105,11 +105,26 @@
 
   <section class="block" id="inquiry">
     <div class="block-head">
-      <p class="kicker">04 — Field notes</p>
-      <h2>Notes from AI adoption</h2>
+      <p class="kicker">04 — On AI</p>
+      <h2>What the work teaches, and what AI changes</h2>
       <p class="block-intro" id="inquiryIntro"></p>
     </div>
-    <div class="notes" id="inquiryList"></div>
+    <div class="ai-part" id="aiPart1">
+      <div class="ai-part-head">
+        <p class="kicker ai-label" id="aiP1Label">Part I</p>
+        <h3 id="aiP1Title">What implementing AI teaches</h3>
+        <p class="ai-part-intro" id="aiP1Intro"></p>
+      </div>
+      <div class="notes" id="inquiryList"></div>
+    </div>
+    <div class="ai-part" id="aiPart2">
+      <div class="ai-part-head" id="aiP2Head">
+        <p class="kicker ai-label" id="aiP2Label">Part II</p>
+        <h3 id="aiP2Title">What AI changes</h3>
+        <p class="ai-part-intro" id="aiP2Intro"></p>
+      </div>
+      <div class="persps" id="perspList"></div>
+    </div>
   </section>
 
   <section class="block" id="career">
@@ -141,12 +156,20 @@
 
 <footer class="foot">
   <span>© <span id="yr"></span> Moss Jacobs · Chicago</span>
+  <button type="button" class="link-btn" id="glossOpen" aria-haspopup="dialog">Glossary of terms</button>
   <button type="button" id="reviewOn" hidden></button>
 </footer>
 
 <dialog id="caseDialog" aria-labelledby="dlgTitle">
   <form method="dialog"><button class="dlg-close" aria-label="Close">×</button></form>
   <div id="dlgBody"></div>
+</dialog>
+
+<dialog id="glossDialog" class="gloss-dialog" aria-labelledby="glossDlgTitle">
+  <form method="dialog"><button class="dlg-close" aria-label="Close">×</button></form>
+  <p class="kicker">Glossary</p>
+  <h3 id="glossDlgTitle">Terms used on this page</h3>
+  <dl class="gloss-list" id="glossDlgList"></dl>
 </dialog>
 
 <noscript><p style="padding:2rem">This page needs JavaScript to render its content.</p></noscript>

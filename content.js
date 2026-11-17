@@ -452,33 +452,6 @@ window.CONTENT = {
    "outcome": "Recognized by a client for more than $500,000 in savings against design budgets across four hotel and gaming projects. Gaming regulation made the data center and surveillance scope a compliance matter as well as a construction one."
   },
   {
-   "id": "capiz",
-   "title": "International sourcing: a capiz-shell casino ceiling",
-   "org": "Marnell Companies",
-   "period": "2006 – 2010",
-   "status": "Delivered",
-   "limits": "From my own account. The supplier, cost and square footage are not published here.",
-   "lenses": [
-    "infra",
-    "finops"
-   ],
-   "line": "One ceiling, three countries: shell from the Philippines, fabrication in New York, installation in Las Vegas.",
-   "tags": [
-    "International sourcing",
-    "Specification",
-    "Fire testing",
-    "Logistics"
-   ],
-   "context": "The design called for a casino ceiling finished entirely in capiz shell: a natural material with no domestic source, which also had to meet fire code for a gaming floor.",
-   "role": "Director of purchasing and sourcing: found the source, negotiated supply, and coordinated specification, testing, fabrication and delivery with the designers and the construction team.",
-   "approach": [
-    "Sourced the raw shell in the Philippines, with several trips to qualify supply and quality.",
-    "Had it fabricated in New York onto fire-rated panels, and ran prototypes through fire testing before committing to production.",
-    "Sequenced manufacturing and shipping to the installation schedule."
-   ],
-   "outcome": "Installed as designed. One purchasing decision that involved specification, fire code, overseas supply, domestic fabrication and a construction schedule at once."
-  },
-  {
    "id": "global",
    "title": "Global systems modernization for a manufacturer",
    "org": "Magnetrol International (via RL Canning)",
@@ -528,29 +501,140 @@ window.CONTENT = {
   }
  ],
  "inquiry": {
-  "intro": "I studied philosophy and design before I managed programs. I am not an AI researcher and I do not build models. I run adoption inside a regulated business, and these are the things that work has taught me so far.",
-  "notes": [
-   {
-    "q": "Useful on day one, or not at all.",
-    "a": "If people do not find a tool useful immediately, they do not come back to it. Adoption has to start from a task someone already does every morning, not from a tour of features."
-   },
-   {
-    "q": "An assistant is only as good as what it can reach.",
-    "a": "Without access to the systems people actually work in, an assistant helps with email and calendars and little else. The hard part of enterprise AI is governed access to the firm's own data."
-   },
-   {
-    "q": "Automation is an audit.",
-    "a": "Looking closely enough at a process to automate it shows how old it is. In a firm where people stay for decades, processes rarely get revisited. We wrote run books and retired unused licenses as we went."
-   },
-   {
-    "q": "Roll out by department, not by announcement.",
-    "a": "Each group got its own ideation session, its own build-a-thon and its own champions. It is slower, and it is the version people keep using."
-   },
-   {
-    "q": "Ask whether it is the right problem.",
-    "a": "Not every idea needs something built. Where an approved tool already does the job, I start there. Philosophy taught me to question how a problem is framed; design taught me to watch how people actually use a thing."
-   }
-  ]
+  "intro": "I studied philosophy and design before I managed technology programs. I am not an AI researcher and I do not build models; I lead adoption inside a regulated business. Part I is what that work has taught me. Part II follows those lessons to the larger questions underneath them, about judgment, trust, responsibility and how institutions are organized.",
+  "partI": {
+   "label": "Part I",
+   "title": "What implementing AI teaches",
+   "intro": "Four lessons from rolling out AI assistants and automation across sales, trading, research and support functions.",
+   "notes": [
+    {
+     "n": 1,
+     "q": "Start where people already work.",
+     "a": "If a tool does not help with something people already do, most try it once and do not come back. Early use starts from a daily task, not a tour of features. That first usefulness is what earns the time for the slower work of building something larger."
+    },
+    {
+     "n": 2,
+     "q": "Access comes first, but it is not the whole problem.",
+     "a": "Without governed access to the systems people work in, such as the CRM, market data and the firm's own research, an assistant helps with email and calendars and little else. Connecting it to the firm's data with the right permissions is the first hard problem. Access does not make the answers correct; it makes them possible to check."
+    },
+    {
+     "n": 3,
+     "q": "Automation is an audit.",
+     "a": "Looking at a process closely enough to automate it shows how old it is. In a firm where people stay for decades, processes rarely get revisited. Some were worth automating, some needed streamlining first, and some were better retired. We wrote run books and cancelled unused licenses as we went."
+    },
+    {
+     "n": 4,
+     "q": "Roll out by department, not by announcement.",
+     "a": "Each group got its own ideation session, its own build-a-thon and its own champions from the business. It is slower, and it is the version people keep using. It scales because the intake, review and support path stays the same from one group to the next."
+    }
+   ]
+  },
+  "partII": {
+   "label": "Part II",
+   "title": "What AI changes",
+   "intro": "The lessons above lead to four larger questions. Each one names the lesson it builds on. Open any of them for the argument, where it shows up in my work, and further reading.",
+   "items": [
+    {
+     "id": "judgment",
+     "title": "Answers are getting cheap. Framing the question is not.",
+     "core": "When a system can produce a competent answer to many questions in seconds, more of the value sits upstream: deciding what is worth asking, what a good answer has to account for, and what we will do with it.",
+     "body": [
+      "The economists Ajay Agrawal, Joshua Gans and Avi Goldfarb describe current AI as a fall in the cost of prediction. As prediction gets cheaper, the value of judgment shifts, and much of it, deciding which outcomes matter and what to do about them, becomes more valuable.",
+      "Stuart Russell at Berkeley argues that the standard model of AI, building optimizers and handing them fixed objectives, is a mistake, because people cannot specify objectives completely and correctly. Organizations face a small version of this every day: the well-run metric that misses the purpose behind it.",
+      "A cheaper answer makes a badly framed question more costly, because it gets acted on faster and at greater scale. The philosopher's habit of asking what we are assuming, and what would show us we are wrong, stops being academic."
+     ],
+     "practice": "Before anything is built, I ask whether an approved tool already does the job and whether the process should exist at all. Automation work has shown me more than one process that needed retiring rather than speeding up.",
+     "reading": [
+      {
+       "label": "Agrawal, Gans and Goldfarb, “Exploring the Impact of Artificial Intelligence: Prediction versus Judgment,” NBER Working Paper 24626 (2018)",
+       "url": "https://www.nber.org/papers/w24626"
+      },
+      {
+       "label": "Stuart Russell, “Human-Compatible Artificial Intelligence” (UC Berkeley, author's chapter)",
+       "url": "https://aima.eecs.berkeley.edu/~russell/papers/mi19book-hcai.pdf"
+      }
+     ],
+     "from": [
+      3
+     ]
+    },
+    {
+     "id": "trust",
+     "title": "Fluency is not reliability.",
+     "core": "Generated text reads as confident whether or not it is right, so the usual signal for trust stops working. Reliance has to be set by the use, not the tool: where output can be used as it is, where it is only a draft, and where it should not be used at all.",
+     "body": [
+      "NIST's Generative AI Profile uses the term confabulation for confidently stated but false content, and lists automation bias and over-reliance among the risks in how people and AI systems are configured together, not only in the model itself.",
+      "In a field experiment with 758 Boston Consulting Group consultants, researchers from Harvard Business School, MIT Sloan and elsewhere found that GPT-4 helped people finish more work, faster and at higher quality, on tasks inside its capability. On a task outside it, people using AI were less likely to reach the correct answer, although the tasks looked similarly difficult.",
+      "Regulated finance already knows how to work this way. It separates indicative from firm, draft from approved, research from advice. Applying the same distinctions to AI output, tied to the cost of an error, is more useful than a general verdict on whether a tool can be trusted."
+     ],
+     "practice": "On the desks, the questions I hear are about accuracy, what data a tool can see, and what counts as appropriate use. Governed access to the firm's own records is what lets an answer be checked against them; it does not remove the need to check.",
+     "reading": [
+      {
+       "label": "NIST AI 600-1, Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile (July 2024)",
+       "url": "https://doi.org/10.6028/NIST.AI.600-1"
+      },
+      {
+       "label": "Dell'Acqua et al., “Navigating the Jagged Technological Frontier,” Organization Science 37(2) (2026)",
+       "url": "https://doi.org/10.1287/orsc.2025.21838"
+      }
+     ],
+     "from": [
+      2
+     ]
+    },
+    {
+     "id": "responsibility",
+     "title": "A human in the loop needs the authority to disagree.",
+     "core": "Human oversight is meaningful when the person has the context, the time and the standing to overrule the system. An approval step without those things puts a name on a decision without giving that person control of it.",
+     "body": [
+      "The researcher Madeleine Clare Elish calls this a moral crumple zone: when an automated system fails, responsibility is assigned to the nearest human operator, who may have had little control over what the system did.",
+      "Lisanne Bainbridge observed in 1983 that automating most of a job leaves people the hardest part, taking over when something unusual happens, while removing the daily practice that kept them able to do it.",
+      "For an institution this is a design question. Decide which decisions stay with people. Give those people the context to make them, not just an approve button. Keep them in practice, and name who owns each outcome. A system can take on a task; accountability for the outcome stays with people."
+     ],
+     "practice": "I keep the roles explicit: the business decides whether something is useful, I own priorities and adoption, engineers build, and security and architecture approve what data a tool may reach. The application inventory applies the same idea: every system is being given a named owner and a run book.",
+     "reading": [
+      {
+       "label": "Elish, “Moral Crumple Zones: Cautionary Tales in Human-Robot Interaction,” Engaging Science, Technology, and Society 5 (2019)",
+       "url": "https://doi.org/10.17351/ests2019.260"
+      },
+      {
+       "label": "Bainbridge, “Ironies of Automation,” Automatica 19(6) (1983)",
+       "url": "https://doi.org/10.1016/0005-1098(83)90046-8"
+      }
+     ],
+     "from": [
+      2,
+      4
+     ]
+    },
+    {
+     "id": "redesign",
+     "title": "The gain is in redesigning the work, not swapping the task.",
+     "core": "Placing AI into an existing process usually speeds that process up without changing it. The larger opportunity is to reorganize work, decisions and roles around what has become cheap, and that is organizational work more than technical work.",
+     "body": [
+      "Erik Brynjolfsson, Daniel Rock and Chad Syverson describe a productivity J-curve: general-purpose technologies require large complementary investments in new processes, skills and roles that are mostly unmeasured at first, so measured productivity lags before it rises. The economic historian Paul David made a similar point about electricity: factories gained most when they were redesigned around electric power, not when the steam engine was simply replaced.",
+      "A two-year field study led by MIT Sloan's Katherine Kellogg, comparing a medical center with a law firm, found that structured support for the people doing the experimenting, not the capability of the tools, separated broad adoption from a handful of solutions.",
+      "The design questions are institutional. Who may deploy a capability, and on what data? How is the unglamorous work of testing and refining a use case recognized? How does something built for one desk travel to the next? The answers decide whether AI changes what an institution can do, or only how fast it does what it already did."
+     ],
+     "practice": "The automation program grew this way: a proof of concept in Finance, then an intake and design path other functions could reuse. Finding out how a process really worked came first; automating or redesigning it came second. AI adoption is following the same pattern, department by department, with champions from each business.",
+     "reading": [
+      {
+       "label": "Brynjolfsson, Rock and Syverson, “The Productivity J-Curve,” American Economic Journal: Macroeconomics (2021); free NBER version (2018)",
+       "url": "https://www.nber.org/papers/w25148"
+      },
+      {
+       "label": "Kellogg, Wiesenfeld and Karunakaran, working paper (2026), as summarized by MIT Sloan",
+       "url": "https://mitsloan.mit.edu/press/why-some-organizations-turn-ai-experiments-business-value-while-others-quietly-fail"
+      }
+     ],
+     "from": [
+      1,
+      3,
+      4
+     ]
+    }
+   ]
+  }
  },
  "eras": [
   {
@@ -632,5 +716,303 @@ window.CONTENT = {
  ],
  "education": {
   "text": "Coursework toward degrees in Philosophy (Shimer College) and Communications (Antioch College). Architecture and design program at the Bauhaus Dessau Foundation, Germany. Continuing study in computer science and AI (University of Michigan via Coursera). Professional training includes PMI project management, ITIL v3, UiPath, and AML and Market Abuse Regulation compliance."
- }
+ },
+ "glossary": [
+  {
+   "key": "crm",
+   "term": "CRM",
+   "match": "CRMs?",
+   "full": "Customer relationship management",
+   "plain": "The system a firm uses to record its clients, contacts and every interaction with them.",
+   "example": "A salesperson logs a call with a fund manager so colleagues see it before the next meeting."
+  },
+  {
+   "key": "rpa",
+   "term": "RPA",
+   "match": "RPA",
+   "full": "Robotic process automation",
+   "plain": "Software “bots” that repeat the rule-based clicks and keystrokes a person would otherwise do across existing applications.",
+   "example": "Copying figures from a daily emailed report into a finance system every morning."
+  },
+  {
+   "key": "coe",
+   "term": "Center of Excellence",
+   "match": "Center of Excellence",
+   "full": "Center of Excellence (CoE)",
+   "plain": "A small central team that sets standards, reviews ideas and supports delivery for a capability used across a firm.",
+   "example": "An automation CoE decides which processes are worth automating and how bots are built and supported."
+  },
+  {
+   "key": "pmo",
+   "term": "PMO",
+   "match": "PMO",
+   "full": "Project or program management office",
+   "plain": "The team that runs planning, budgets, risk tracking and reporting across a set of related projects.",
+   "example": "Turning ten workstreams' status into one view of milestones and risks for a steering committee."
+  },
+  {
+   "key": "erp",
+   "term": "ERP",
+   "match": "ERP",
+   "full": "Enterprise resource planning",
+   "plain": "The core system a company runs its finance, purchasing, inventory and operations on.",
+   "example": "A manufacturer's orders, stock levels and accounts all live in one ERP such as SAP."
+  },
+  {
+   "key": "api",
+   "term": "API",
+   "match": "APIs?",
+   "full": "Application programming interface",
+   "plain": "A defined, supported way for one system to request data or actions from another.",
+   "example": "A reporting tool pulls yesterday's client meetings straight from the CRM instead of from a file export."
+  },
+  {
+   "key": "rfp",
+   "term": "RFP",
+   "match": "RFPs?",
+   "full": "Request for proposal",
+   "plain": "A formal document asking vendors to bid against stated requirements, so offers can be compared on equal terms.",
+   "example": "Inviting three software vendors to propose and price a replacement system."
+  },
+  {
+   "key": "sow",
+   "term": "SOW",
+   "match": "SOWs?",
+   "full": "Statement of work",
+   "plain": "The contract document that defines what a vendor will deliver, by when, at what cost, and how it will be accepted.",
+   "example": "An upgrade SOW lists the environments, testing, training and sign-off criteria."
+  },
+  {
+   "key": "poc",
+   "term": "proof of concept",
+   "match": "proofs? of concept",
+   "full": "Proof of concept",
+   "plain": "A small, time-boxed trial to test whether an approach works before committing to it.",
+   "example": "Automating one finance process to prove the tool before a firm-wide rollout."
+  },
+  {
+   "key": "qa",
+   "term": "QA",
+   "match": "QA",
+   "full": "Quality assurance",
+   "plain": "Checking that a change works before it reaches users; in IT, also the test environment where that happens.",
+   "example": "A new release runs in QA for user testing before it moves to production."
+  },
+  {
+   "key": "sla",
+   "term": "SLA",
+   "match": "SLAs?",
+   "full": "Service-level agreement",
+   "plain": "The measurable standards a provider commits to, with remedies if it misses them.",
+   "example": "Guaranteed availability for a hosted platform and a four-hour response to critical incidents."
+  },
+  {
+   "key": "itil",
+   "term": "ITIL",
+   "match": "ITIL",
+   "full": "IT Infrastructure Library",
+   "plain": "A widely used set of practices for running IT services: handling incidents, approving changes and fixing root causes.",
+   "example": "Every production change gets a ticket, an approval and a rollback plan."
+  },
+  {
+   "key": "mifid",
+   "term": "MiFID II",
+   "match": "MiFID II",
+   "full": "Markets in Financial Instruments Directive II",
+   "plain": "EU financial-markets rules in force since 2018. Among other things, they changed how investment managers pay for research.",
+   "example": "Research is paid for separately from trading commissions, so banks need evidence of what research clients use."
+  },
+  {
+   "key": "aggregator",
+   "term": "research aggregators",
+   "match": "research aggregators",
+   "full": "Research aggregators",
+   "plain": "Platforms that distribute investment research from many banks to institutional investors in one place.",
+   "example": "A fund manager reads several banks' reports in one portal; readership data flows back to each publisher."
+  },
+  {
+   "key": "dr",
+   "term": "disaster recovery",
+   "match": "disaster[- ]recovery",
+   "full": "Disaster recovery (DR)",
+   "plain": "The plans and backup systems that restore a service at another site after a major outage, and the tests that prove they work.",
+   "example": "An annual test switches a platform to its backup data center and confirms users can still work."
+  },
+  {
+   "key": "virt",
+   "term": "virtualization",
+   "match": "virtualization|virtualized",
+   "full": "Server virtualization",
+   "plain": "Running many independent “virtual” servers as software on shared physical hardware.",
+   "example": "A hundred physical servers consolidated onto a handful of hosts, cutting hardware and power."
+  },
+  {
+   "key": "runbook",
+   "term": "run book",
+   "match": "run ?books?",
+   "full": "Run book",
+   "plain": "Step-by-step operating instructions for a system or process, so support does not depend on one person's memory.",
+   "example": "How to restart a failed overnight job, what to check, and whom to notify."
+  },
+  {
+   "key": "lanwan",
+   "term": "LAN/WAN",
+   "match": "LAN/WAN",
+   "full": "Local-area and wide-area networks",
+   "plain": "A LAN connects devices within one site; a WAN connects sites to each other.",
+   "example": "An office floor's network is a LAN; the links between plants in different countries form a WAN."
+  },
+  {
+   "key": "sql",
+   "term": "SQL",
+   "match": "SQL",
+   "full": "Structured Query Language",
+   "plain": "The standard language for retrieving and changing data in relational databases.",
+   "example": "Listing every client meeting in the last quarter, grouped by region."
+  },
+  {
+   "key": "tririga",
+   "term": "TRIRIGA",
+   "match": "TRIRIGA",
+   "full": "IBM TRIRIGA, an integrated workplace management system (IWMS)",
+   "plain": "Software for managing real estate, construction projects, facilities and space in one system.",
+   "example": "Keeping a building project's contracts, drawings, schedule and budget in one shared record."
+  },
+  {
+   "key": "aml",
+   "term": "AML",
+   "match": "AML",
+   "full": "Anti-money laundering",
+   "plain": "The rules and controls that stop criminal money from moving through a financial firm.",
+   "example": "Verifying a new client's identity and flagging unusual transfers for review."
+  },
+  {
+   "key": "corpaccess",
+   "term": "corporate access",
+   "match": "corporate access",
+   "full": "Corporate access",
+   "plain": "A service, usually run by a broker, that arranges meetings between institutional investors and the management of listed companies.",
+   "example": "Setting up a fund manager's meeting with a company's finance chief during an investor conference."
+  },
+  {
+   "key": "mktdata",
+   "term": "market data",
+   "match": "market data",
+   "full": "Market data",
+   "plain": "Prices, quotes, trades and related figures supplied by exchanges and data vendors, live or historical.",
+   "example": "The real-time price feed a trader watches, or a year of daily closing prices used in an analysis."
+  },
+  {
+   "key": "buildathon",
+   "term": "build-a-thon",
+   "match": "build-a-thons?",
+   "full": "Build-a-thon",
+   "plain": "A short, hands-on working session, in the style of a hackathon, where business users and technical staff build and test small tools together.",
+   "example": "A research team spends an afternoon building an AI workflow that summarizes overnight reports, then tests it on real ones."
+  },
+  {
+   "key": "champions",
+   "term": "champions",
+   "match": "champions",
+   "full": "Champion network",
+   "plain": "People inside each business team who adopt a new tool early, help colleagues use it, and report what is not working.",
+   "example": "A senior trader shares a working prompt with the desk and passes problems back to the program team."
+  },
+  {
+   "key": "golive",
+   "term": "go-live",
+   "match": "go-live",
+   "full": "Go-live",
+   "plain": "The moment a new system starts being used for real work.",
+   "example": "The Monday when staff stop using the old system and start entering orders in the new one."
+  },
+  {
+   "key": "mainframe",
+   "term": "mainframe",
+   "match": "mainframe",
+   "full": "Mainframe",
+   "plain": "A large, centralized computer that runs core business processing; many older enterprise systems were built on one.",
+   "example": "Billing and inventory programs on a central IBM machine that have to be moved to modern servers."
+  },
+  {
+   "key": "batch",
+   "term": "batch job",
+   "match": "batch jobs?",
+   "full": "Batch job",
+   "plain": "A program scheduled to run automatically, often overnight, that processes data in bulk without anyone at the keyboard.",
+   "example": "An overnight job that loads the day's trades into a reporting database."
+  },
+  {
+   "key": "databricks",
+   "term": "Databricks",
+   "match": "Databricks",
+   "full": "Databricks (data and AI platform)",
+   "plain": "A cloud platform for storing, processing and analyzing large volumes of data, and for building AI applications on top of it.",
+   "example": "Bringing years of research and client data into one place so analysts can query it together."
+  },
+  {
+   "key": "uipath",
+   "term": "UiPath",
+   "match": "UiPath",
+   "full": "UiPath (automation software)",
+   "plain": "A widely used commercial platform for building, running and monitoring RPA bots.",
+   "example": "A bot built in UiPath that reconciles two reports every morning and emails the exceptions."
+  },
+  {
+   "key": "servicenow",
+   "term": "ServiceNow",
+   "match": "ServiceNow",
+   "full": "ServiceNow (IT service management)",
+   "plain": "A platform for tracking IT work: incident tickets, change requests, approvals and service catalogs.",
+   "example": "A user reports an outage; the ticket is tracked through diagnosis, fix and sign-off."
+  },
+  {
+   "key": "confab",
+   "term": "confabulation",
+   "match": "confabulation",
+   "full": "Confabulation (in generative AI)",
+   "plain": "Confidently stated but false content produced by a generative AI system; often called hallucination.",
+   "example": "An assistant cites a report, figure or case that does not exist."
+  },
+  {
+   "key": "autobias",
+   "term": "automation bias",
+   "match": "automation bias",
+   "full": "Automation bias",
+   "plain": "The tendency to over-trust an automated system's output, including when other evidence points the other way.",
+   "example": "Accepting an AI-drafted figure without checking it because the tool is usually right."
+  },
+  {
+   "key": "gpt",
+   "term": "general-purpose technology",
+   "match": "general-purpose technolog(?:y|ies)",
+   "full": "General-purpose technology",
+   "plain": "Economists' term for a technology used across the whole economy that keeps generating new uses and complementary inventions.",
+   "example": "Electricity changed not only lighting but how factories, offices and homes were laid out."
+  },
+  {
+   "key": "ti",
+   "term": "tenant improvement",
+   "match": "tenant-improvement",
+   "full": "Tenant improvement",
+   "plain": "Construction that fits out a leased space for a particular occupant.",
+   "example": "Building a restaurant's kitchen and dining room inside a resort's retail space."
+  },
+  {
+   "key": "pmi",
+   "term": "PMI",
+   "match": "PMI",
+   "full": "Project Management Institute",
+   "plain": "The professional body that publishes widely used project-management standards and runs the PMP certification.",
+   "example": "Its PMBOK Guide is a common reference for planning, scheduling and risk management."
+  },
+  {
+   "key": "mar",
+   "term": "Market Abuse Regulation",
+   "match": "Market Abuse Regulation",
+   "full": "EU Market Abuse Regulation (MAR)",
+   "plain": "EU rules against insider dealing, unlawful disclosure of inside information and market manipulation.",
+   "example": "Training staff to recognize and report suspicious trading or leaks of inside information."
+  }
+ ]
 };

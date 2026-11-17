@@ -120,7 +120,7 @@
     if (!C.hero[key]) key = "all";
     state.lens = key; state.userNode = false;
     [].forEach.call($("lensOpts").children, function (b) { b.setAttribute("aria-pressed", String(b.dataset.key === key)); });
-    renderHero(animate); applyLens();
+    renderHero(animate); applyLens(); Gloss.annotate();
     try { history.replaceState(null, "", key === "all" ? location.pathname + location.search : "#" + key); } catch (e) {}
   }
   function applyLens() {
@@ -193,8 +193,10 @@
     [el("div", { class: "dlg-meta" }, [
         el("span", { class: "case-org", text: c.org + " · " + c.period }),
         el("span", { class: "status", "data-s": c.status, text: c.status })]),
-      el("h3", { id: "dlgTitle", text: c.title }), dl, ev(c.ev)
+      el("h3", { id: "dlgTitle", text: c.title }), dl,
+      el("div", { class: "tags dlg-tags", role: "list", "aria-label": "Focus areas" }, c.tags.map(function (t) { return el("span", { class: "tag", role: "listitem", text: t }); })), ev(c.ev)
     ].forEach(function (n) { n && body.appendChild(n); });
+    Gloss.scanContext(body);
     var d = $("caseDialog");
     d.showModal ? d.showModal() : d.setAttribute("open", "");
     d.scrollTop = 0;
@@ -207,12 +209,44 @@
     });
   }
 
-  /* ---------- Inquiry ---------- */
+  /* ---------- On AI (two parts) ---------- */
   function buildInquiry() {
-    $("inquiryIntro").textContent = C.inquiry.intro;
-    var e = ev(C.inquiry.ev); e && $("inquiryIntro").parentNode.appendChild(e);
-    C.inquiry.notes.forEach(function (n) {
-      $("inquiryList").appendChild(el("article", { class: "note reveal" }, [el("h3", { text: n.q }), el("p", { text: n.a })]));
+    var Q = C.inquiry;
+    $("inquiryIntro").textContent = Q.intro;
+    var e = ev(Q.ev); e && $("inquiryIntro").parentNode.appendChild(e);
+    var p1 = Q.partI || { notes: Q.notes || [] };
+    if (p1.title) { $("aiP1Label").textContent = p1.label; $("aiP1Title").textContent = p1.title; }
+    $("aiP1Intro").textContent = p1.intro || "";
+    p1.notes.forEach(function (n, i) {
+      var num = n.n || i + 1;
+      $("inquiryList").appendChild(el("article", { class: "note reveal", id: "ai-note-" + num }, [
+        el("span", { class: "note-n", text: (num < 10 ? "0" : "") + num }), el("h4", { text: n.q }), el("p", { text: n.a }), ev(n.ev)]));
+    });
+    var p2 = Q.partII;
+    if (!p2) { $("aiPart2").hidden = true; return; }
+    $("aiP2Label").textContent = p2.label; $("aiP2Title").textContent = p2.title; $("aiP2Intro").textContent = p2.intro || "";
+    var e2 = ev(p2.ev); e2 && $("aiP2Head").appendChild(e2);
+    p2.items.forEach(function (it, i) {
+      var body = el("div", { class: "persp-body", id: "ai-" + it.id + "-more" });
+      it.body.forEach(function (t) { body.appendChild(el("p", { text: t })); });
+      if (it.practice) body.appendChild(el("p", { class: "persp-practice" }, [el("b", { text: "In my work" }), document.createTextNode(it.practice)]));
+      if (it.reading && it.reading.length) {
+        body.appendChild(el("div", { class: "persp-reading" }, [el("b", { text: "Further reading" }),
+          el("ul", {}, it.reading.map(function (r) { return el("li", {}, [el("a", { href: r.url, target: "_blank", rel: "noopener", text: r.label })]); }))]));
+      }
+      var det = el("details", {}, [
+        el("summary", {}, [el("span", { class: "s-open", text: "Read the argument" }), el("span", { class: "s-close", text: "Close" })]),
+        body
+      ]);
+      $("perspList").appendChild(el("article", { class: "persp reveal", id: "ai-" + it.id }, [
+        el("span", { class: "persp-n", text: (i < 9 ? "0" : "") + (i + 1) }),
+        el("div", {}, [
+          (it.from && it.from.length) ? el("p", { class: "persp-from" }, [document.createTextNode("Builds on Part I · ")].concat(it.from.map(function (f, k) {
+            var a = el("a", { href: "#ai-note-" + f, text: (f < 10 ? "0" : "") + f });
+            return k ? [document.createTextNode(", "), a] : [a];
+          }).reduce(function (x, y) { return x.concat(y); }, []))) : null,
+          el("h4", { text: it.title }), el("p", { class: "persp-core", text: it.core }), det])
+      ]));
     });
   }
 
@@ -264,11 +298,145 @@
     try { sessionStorage.setItem("mj-review", on ? "1" : ""); } catch (e) {}
   }
 
+  /* ---------- Glossary ----------
+     Page rule: each term is explained once, at its first appearance in reading order.
+       Pass 1 walks the always-visible page (#main) top to bottom; pass 2 walks the expandable
+       Part II arguments, explaining only terms not already explained above them.
+     Separate contexts: each case dialog explains a term once within that dialog.
+     Never inside links, buttons (case cards, lens and era controls) or summaries; the rotating
+     diagram caption is skipped. Lens changes rebuild the annotations from scratch.
+     Definitions live only in content.js -> glossary. */
+  var Gloss = (function () {
+    var list = C.glossary || [], byKey = {};
+    if (!list.length) return { annotate: function () {}, scanContext: function () {}, hide: function () {} };
+    var order = list.slice().sort(function (a, b) { return b.match.length - a.match.length; });
+    order.forEach(function (g) { byKey[g.key] = g; });
+    var re = new RegExp("(^|[^A-Za-z0-9])(?:" + order.map(function (g) { return "(" + g.match.replace(/\((?!\?)/g, "(?:") + ")"; }).join("|") + ")(?![A-Za-z0-9])", "g");
+    var defs = el("div", { id: "glossDefs", hidden: "" });
+    list.forEach(function (g) { defs.appendChild(el("span", { id: "gl-" + g.key, text: g.full + ". " + g.plain + " Example: " + g.example })); });
+    document.body.appendChild(defs);
+
+    var pop = el("div", { class: "gloss-pop", id: "glossPop", role: "dialog", "aria-modal": "false", "aria-labelledby": "glossPopFull", hidden: "" });
+    var x = el("button", { type: "button", class: "gp-x", "aria-label": "Close definition", text: "×" });
+    var pTerm = el("p", { class: "gp-term" }), pFull = el("p", { class: "gp-full", id: "glossPopFull" }), pPlain = el("p", { class: "gp-plain" }), pEx = el("p", { class: "gp-ex" });
+    [x, pTerm, pFull, pPlain, pEx].forEach(function (n) { pop.appendChild(n); });
+    document.body.appendChild(pop);
+    var cur = null, pinned = false, tShow, tHide;
+
+    function place() {
+      if (!cur) return;
+      var r = cur.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight, m = 10;
+      pop.style.maxWidth = Math.min(340, vw - 2 * m) + "px";
+      var w = pop.offsetWidth, hgt = pop.offsetHeight;
+      var left = Math.max(m, Math.min(r.left + r.width / 2 - w / 2, vw - w - m));
+      var top = r.bottom + 8, above = top + hgt > vh - m && r.top - hgt - 8 > m;
+      if (above) top = r.top - hgt - 8;
+      top = Math.max(m, Math.min(top, vh - hgt - m));
+      pop.style.left = Math.round(left) + "px"; pop.style.top = Math.round(top) + "px";
+      pop.dataset.side = above ? "above" : "below";
+    }
+    function show(t, pin) {
+      clearTimeout(tShow); clearTimeout(tHide);
+      var g = byKey[t.dataset.key]; if (!g) return;
+      if (cur && cur !== t) cur.setAttribute("aria-expanded", "false");
+      cur = t; pinned = !!pin;
+      pTerm.textContent = g.term; pFull.textContent = g.full; pPlain.textContent = g.plain;
+      pEx.innerHTML = ""; pEx.appendChild(el("span", { text: "Example" })); pEx.appendChild(document.createTextNode(g.example));
+      var host = t.closest("dialog") || document.body;
+      if (pop.parentNode !== host) host.appendChild(pop);
+      pop.hidden = false; t.setAttribute("aria-expanded", "true"); place();
+    }
+    function hide(refocus) {
+      clearTimeout(tShow); clearTimeout(tHide);
+      if (!cur) return;
+      var t = cur; cur = null; pinned = false; pop.hidden = true;
+      t.setAttribute("aria-expanded", "false");
+      if (refocus && t.isConnected) t.focus();
+    }
+    function mouse(e) { return e.pointerType === "mouse" || e.pointerType === "pen"; }
+    function wire(b) {
+      b.addEventListener("pointerenter", function (e) { if (!mouse(e) || pinned) return; clearTimeout(tHide); tShow = setTimeout(function () { show(b, false); }, 90); });
+      b.addEventListener("pointerleave", function (e) { if (!mouse(e)) return; clearTimeout(tShow); if (!pinned) tHide = setTimeout(hide, 180); });
+      b.addEventListener("focus", function () { if (!pinned && b.matches(":focus-visible")) show(b, false); });
+      b.addEventListener("blur", function (e) { if (!pop.contains(e.relatedTarget) && (e.relatedTarget || !pinned)) tHide = setTimeout(hide, 120); });
+      b.addEventListener("click", function (e) { e.stopPropagation(); if (cur === b && pinned) hide(); else show(b, true); });
+    }
+    pop.addEventListener("pointerenter", function () { clearTimeout(tHide); });
+    pop.addEventListener("pointerleave", function (e) { if (mouse(e) && !pinned) tHide = setTimeout(hide, 180); });
+    x.addEventListener("click", function () { hide(true); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && cur) { e.preventDefault(); e.stopPropagation(); hide(true); } }, true);
+    document.addEventListener("pointerdown", function (e) { if (cur && !pop.contains(e.target) && !e.target.closest(".term")) hide(); }, true);
+    var raf = 0; function later() { if (cur && !raf) raf = requestAnimationFrame(function () { raf = 0; place(); }); }
+    window.addEventListener("scroll", later, true); window.addEventListener("resize", later);
+
+    var SKIP = "a,button,summary,label,script,style,svg,.ev,.term,.gloss-pop,#glossDefs,#seamCaption";
+    function eligible(root, excludeBodies) {
+      var nodes = [], w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+        var p = n.parentElement;
+        if (!p || !n.nodeValue.trim() || p.closest(SKIP)) return 2;
+        if (excludeBodies && p.closest(".persp-body")) return 2;
+        return 1;
+      } });
+      while (w.nextNode()) nodes.push(w.currentNode);
+      return nodes;
+    }
+    function wrap(nodes, seen) {
+      nodes.forEach(function (n) {
+        var s = n.nodeValue, out = document.createDocumentFragment(), last = 0, m, hit = false;
+        re.lastIndex = 0;
+        while ((m = re.exec(s))) {
+          var gi = 2; while (gi < m.length && m[gi] === undefined) gi++;
+          var key = order[gi - 2].key;
+          if (seen[key]) continue;
+          seen[key] = true; hit = true;
+          var start = m.index + m[1].length;
+          out.appendChild(document.createTextNode(s.slice(last, start)));
+          var b = el("button", { type: "button", class: "term", "data-key": key, "aria-describedby": "gl-" + key, "aria-expanded": "false", "aria-controls": "glossPop", text: m[gi] });
+          wire(b); out.appendChild(b);
+          last = start + m[gi].length;
+        }
+        if (!hit) return;
+        out.appendChild(document.createTextNode(s.slice(last)));
+        n.parentNode.replaceChild(out, n);
+      });
+    }
+    function unwrap(root) {
+      [].slice.call(root.querySelectorAll(".term")).forEach(function (b) { b.parentNode.replaceChild(document.createTextNode(b.textContent), b); });
+      root.normalize();
+    }
+    function annotate() {
+      var main = $("main"); if (!main) return;
+      if (cur && main.contains(cur)) hide();
+      unwrap(main);
+      var seen = {};
+      wrap(eligible(main, true), seen);
+      [].forEach.call(main.querySelectorAll(".persp-body"), function (b) { wrap(eligible(b, false), seen); });
+    }
+    function scanContext(root) { if (root) { unwrap(root); wrap(eligible(root, false), {}); } }
+    var dlg = document.getElementById("caseDialog");
+    if (dlg) {
+      dlg.addEventListener("close", function () { hide(); });
+      dlg.addEventListener("cancel", function (e) { if (cur) { e.preventDefault(); hide(true); } });
+    }
+    return { annotate: annotate, scanContext: scanContext, hide: hide };
+  })();
+  /* Glossary list: an unobtrusive footer control for readers who arrive mid-page. */
+  function buildGlossaryList() {
+    var d = $("glossDialog"), open = $("glossOpen"), dl = $("glossDlgList");
+    if (!d || !open || !(C.glossary || []).length) { if (open) open.hidden = true; return; }
+    C.glossary.slice().sort(function (a, b) { return a.term.toLowerCase() < b.term.toLowerCase() ? -1 : 1; }).forEach(function (g) {
+      dl.appendChild(el("dt", {}, [el("b", { text: g.term }), el("span", { text: g.full })]));
+      dl.appendChild(el("dd", {}, [el("p", { text: g.plain }), el("p", { class: "gl-ex" }, [el("span", { text: "Example" }), document.createTextNode(g.example)])]));
+    });
+    open.addEventListener("click", function () { d.showModal ? d.showModal() : d.setAttribute("open", ""); d.scrollTop = 0; });
+    d.addEventListener("click", function (e) { if (e.target === this) this.close(); });
+  }
+
   /* ---------- Init ---------- */
   $("heroTitle").textContent = C.person.title;
   $("heroLoc").textContent = C.person.location;
   $("yr").textContent = new Date().getFullYear();
-  buildSeam(); buildLens(); buildStats(); buildCaps(); buildCases(); buildPrinciples(); buildInquiry(); buildCareer(); buildResume();
+  buildSeam(); buildLens(); buildStats(); buildCaps(); buildCases(); buildPrinciples(); buildInquiry(); buildCareer(); buildResume(); buildGlossaryList();
   var initial = (location.hash || "").slice(1);
   setLens(C.hero[initial] ? initial : "all", false);
 
